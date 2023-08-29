@@ -4,24 +4,88 @@
     "setting": "setting"
   },
   "admin": {
-    "title": "management system"
-  },
-  "system": {
-    "SourceRate": "Source proportion"
+    "title": "Management System"
   },
   "dashboard": {
-    "name": "Dashboard"
+    "name": "Dashboard",
+    "fields": {
+      "sourceRate": "Source proportion",
+      "mallRate": "Goods proportion",
+      "saleValue": "Sales volume",
+      "userValue": "Number of users",
+      "mallValue": "Commodity volume",
+      "supplyValue": "Supply quantity",
+      "userTrend": "User trend",
+      "saleTrend": "Sales trend",
+      "mallTotalRank": "Total Product Ranking",
+      "mallDayRank": "Product Day Ranking",
+      "mallMonthRank": "Product Monthly Ranking"
+    }
   },
   "content": {
     "name": "Content"
   },
-  "articles-manage": {
+  "article-manage": {
     "name": "Article"
   },
-  "articles": {
-    "name": "Article"
+  "article": {
+    "name": "List",
+    "list": {
+    },
+    "tab": {
+      "all": "All",
+      "published": "Published",
+      "unpublished": "Unpublished"
+    },
+    "fields": {
+      "title": "Title",
+      "image": "Cover",
+      "status": "Status",
+      "createdAt": "Created At"
+    }
+  },
+  "category": {
+    "name": "Category",
+    "fields": {
+      "parent": "Parent",
+      "name": "Name"
+    }
+  },
+  "user": {
+    "name": "User List",
+    "fields": {
+      "role": "Role",
+      "nickname": "Nickname",
+      "username": "Username",
+      "avatar": "Avatar",
+      "password": "Password"
+    }
+  },
+  "role": {
+    "name": "User Group",
+    "fields": {
+      "permission": "Permission",
+      "name": "Name"
+    }
+  },
+  "system": {
+    "name": "System"
   },
   "setting": {
-    "name": "Setting"
+    "name": "Setting",
+    "fields": {
+      "title": "Title",
+      "titleHelp": "System header title",
+      "logo": "Logo",
+      "logoHelp": "System Branding Display",
+      "favicon": "Favicon",
+      "faviconHelp": "System Favorites Icon",
+      "footer": "Copyright",
+      "footerHelp": "Copyright information at the bottom of the system",
+      "fixedHeader": "Floating head",
+      "fixedHeaderHelp": "Fixed head to top",
+      "fixedSideBar": "Floating sidebar",
+      "fixedSideBarHelp": "Fixed sidebar to the left side"
+    }
   }
 }

@@ -1,11 +1,11 @@
-import { Modal, appConfig, appContext, createApp, tabBarItem } from '@duxweb/dux-refine'
+import { appConfig, appContext, createApp } from '@duxweb/dux-refine'
 
 import { adminRouter } from './config/router'
 import { adminResources } from './config/resources'
 import zhLang from './locales/zh/common.json'
 import enLang from './locales/en/common.json'
-import { DropdownOption, Button } from 'tdesign-react/esm'
 
+// init function will be called when app start
 const init = (context: appContext) => {
   context.createApp('admin', createApp())
   context.addI18n('zh', 'common', zhLang)
@@ -13,8 +13,10 @@ const init = (context: appContext) => {
   return null
 }
 
+// register function will be called when app register
 const register = (context: appContext) => {
   const admin = context.getApp('admin')
+
   adminRouter(admin)
   adminResources(admin)
 
@@ -33,7 +35,7 @@ const register = (context: appContext) => {
       route: 'index',
     },
     {
-      label: 'articles',
+      label: 'article',
       icon: 'i-tabler:basket',
       route: 'blog-posts',
     },

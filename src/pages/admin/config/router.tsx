@@ -1,7 +1,6 @@
 import { App, lazyComponent } from '@duxweb/dux-refine'
 
-import { BlogPostList } from '../article'
-import { Navigate, redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import Index from '../home'
 
 export const adminRouter = (app: App) => {
@@ -23,7 +22,43 @@ export const adminRouter = (app: App) => {
       children: [
         {
           index: true,
-          element: <BlogPostList />,
+          element: lazyComponent(() => import('../article/list')),
+        },
+      ],
+    },
+    {
+      path: 'category',
+      children: [
+        {
+          index: true,
+          element: lazyComponent(() => import('../category/list')),
+        },
+      ],
+    },
+    {
+      path: 'role',
+      children: [
+        {
+          index: true,
+          element: lazyComponent(() => import('../role/list')),
+        },
+      ],
+    },
+    {
+      path: 'user',
+      children: [
+        {
+          index: true,
+          element: lazyComponent(() => import('../user/list')),
+        },
+      ],
+    },
+    {
+      path: 'setting',
+      children: [
+        {
+          index: true,
+          element: lazyComponent(() => import('../setting/page')),
         },
       ],
     },

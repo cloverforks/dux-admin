@@ -14,43 +14,72 @@ export const adminResources = (app: App) => {
       name: 'content',
       meta: {
         label: 'content',
-        icon: 'i-tabler:basket',
+        icon: 'i-tabler:book',
       },
     },
+    {
+      name: 'article-manage',
+      meta: {
+        parent: 'content',
+        label: 'article-manage',
+        icon: 'i-tabler:book',
+      },
+    },
+    {
+      name: 'article',
+      list: 'article',
+      create: 'article/create',
+      meta: {
+        label: 'article',
+        parent: 'article-manage',
+      },
+    },
+    {
+      name: 'category',
+      list: 'category',
+      create: 'category/create',
+      meta: {
+        label: 'category',
+        parent: 'article-manage',
+      },
+    },
+    {
+      name: 'system',
+      meta: {
+        label: 'system',
+        icon: 'i-tabler:adjustments',
+      },
+    },
+    {
+      name: 'user',
+      list: 'user',
+      create: 'user/create',
+      meta: {
+        label: 'user',
+        parent: 'system',
+      },
+    },
+    {
+      name: 'role',
+      list: 'role',
+      create: 'role/create',
+      meta: {
+        label: 'role',
+        parent: 'system',
+      },
+    },
+
     {
       name: 'setting',
       list: 'setting',
       meta: {
-        parent: 'content',
         label: 'setting',
-        icon: 'i-tabler:book',
+        parent: 'system',
       },
     },
     {
-      name: 'articles-manage',
-      meta: {
-        parent: 'content',
-        label: 'articles-manage',
-        icon: 'i-tabler:book',
-      },
-    },
-    {
-      name: 'articles',
-      list: 'article',
-      create: 'article/create',
-      edit: 'article/edit/:id',
-      show: 'article/show/:id',
-      meta: {
-        label: 'articles',
-        parent: 'articles-manage',
-      },
-    },
-    {
-      name: 'common',
-      meta: {
-        label: 'common',
-        icon: 'i-tabler:basket',
-      },
+      name: 'permission',
+      list: 'permission',
     },
   ])
 }

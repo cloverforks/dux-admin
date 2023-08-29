@@ -6,24 +6,84 @@
   "admin": {
     "title": "中后台管理系统"
   },
-  "system": {
-    "SourceRate": "来源比例"
-  },
   "dashboard": {
-    "dashboard": "仪表盘",
-    "label": "仪表盘",
-    "name": "仪表盘"
+    "name": "仪表盘",
+    "fields": {
+      "sourceRate": "来源占比",
+      "mallRate": "商品占比",
+      "saleValue": "销售额",
+      "userValue": "用户量",
+      "mallValue": "商品量",
+      "supplyValue": "供货量",
+      "userTrend": "用户趋势",
+      "saleTrend": "销售趋势",
+      "mallTotalRank": "商品总排名",
+      "mallDayRank": "商品日排名",
+      "mallMonthRank": "商品月排名"
+    }
   },
   "content": {
     "name": "内容"
   },
-  "articles-manage": {
-    "name": "文章管理"
+  "article-manage": {
+    "name": "文章"
   },
-  "articles": {
-    "name": "文章列表"
+  "article": {
+    "name": "文章列表",
+    "tab": {
+      "all": "全部",
+      "published": "已发布",
+      "unpublished": "未发布"
+    },
+    "fields": {
+      "title": "标题",
+      "image": "封面图",
+      "status": "状态",
+      "createdAt": "创建时间"
+    }
+  },
+  "category": {
+    "name": "文章分类",
+    "fields": {
+      "parent": "上级分类",
+      "name": "名称"
+    }
+  },
+  "user": {
+    "name": "用户列表",
+    "fields": {
+      "role": "角色",
+      "nickname": "昵称",
+      "username": "用户名",
+      "avatar": "头像",
+      "password": "密码"
+    }
+  },
+  "role": {
+    "name": "角色列表",
+    "fields": {
+      "permission": "权限",
+      "name": "名称"
+    }
+  },
+  "system": {
+    "name": "系统管理"
   },
   "setting": {
-    "name": "设置"
+    "name": "设置",
+    "fields": {
+      "title": "标题",
+      "titleHelp": "系统头部标题",
+      "logo": "标志",
+      "logoHelp": "系统品牌展示图标",
+      "favicon": "图标",
+      "faviconHelp": "站点头部小图标",
+      "footer": "版权",
+      "footerHelp": "系统底部版权信息",
+      "fixedHeader": "浮动头部",
+      "fixedHeaderHelp": "固定头部到头部",
+      "fixedSideBar": "浮动边栏",
+      "fixedSideBarHelp": "固定侧边栏到左侧"
+    }
   }
 }

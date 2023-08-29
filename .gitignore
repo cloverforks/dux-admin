@@ -25,4 +25,5 @@ storybook-static
 *.sw?
 
 
-yacl
+.yalc
+yalc.lock

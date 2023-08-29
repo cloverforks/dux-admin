@@ -1,24 +1,11 @@
-import React, { lazy, useRef } from 'react'
-import { useNavigation, useTranslate } from '@refinedev/core'
-import { PrimaryTableCol, Button, Input, DialogPlugin } from 'tdesign-react/esm'
-import {
-  PageTable,
-  FilterItem,
-  CardTableRef,
-  lazyComponent,
-  Modal,
-  ModalOpen,
-} from '@duxweb/dux-refine'
+import React, { useRef } from 'react'
+import { useTranslate, useDelete } from '@refinedev/core'
+import { PrimaryTableCol, Button, Input, Tag, Link, Popconfirm } from 'tdesign-react/esm'
+import { PageTable, FilterItem, CardTableRef, Modal } from '@duxweb/dux-refine'
 
-const statusNameListMap = {
-  0: { label: '审批通过', theme: 'success' },
-  1: { label: '审批失败', theme: 'danger' },
-  2: { label: '审批过期', theme: 'warning' },
-}
-
-export const BlogPostList = () => {
+const List = () => {
   const translate = useTranslate()
-  const { edit, show, create } = useNavigation()
+  const { mutate } = useDelete()
 
   const table = useRef<CardTableRef>(null)
 
@@ -29,35 +16,49 @@ export const BlogPostList = () => {
         colKey: 'id',
         sorter: true,
         sortType: 'all',
-        title: translate('blog_posts.fields.id'),
+        title: 'ID',
         width: 100,
       },
       {
         colKey: 'title',
-        title: translate('blog_posts.fields.title'),
+        title: translate('article.fields.title'),
         minWidth: 200,
       },
       {
         colKey: 'status',
-        title: translate('blog_posts.fields.status'),
-        width: 100,
+        title: translate('article.fields.status'),
+        width: 150,
         filter: {
           type: 'single',
           list: [
-            { label: '审批通过', value: '0' },
-            { label: '已过期', value: '1' },
-            { label: '审批失败', value: '2' },
+            { label: translate('article.tab.published'), value: '1' },
+            { label: translate('article.tab.unpublished'), value: '2' },
           ],
+        },
+        cell: ({ row }) => {
+          return (
+            <>
+              {row.status ? (
+                <Tag theme='warning' variant='outline'>
+                  {translate('article.tab.published')}
+                </Tag>
+              ) : (
+                <Tag theme='success' variant='outline'>
+                  {translate('article.tab.unpublished')}
+                </Tag>
+              )}
+            </>
+          )
         },
       },
       {
-        colKey: 'createdAt',
-        title: translate('blog_posts.fields.createdAt'),
+        colKey: 'created_at',
+        title: translate('article.fields.createdAt'),
         sorter: true,
         sortType: 'all',
         width: 200,
         cell: ({ row }) => {
-          return new Date(row.createdAt).toLocaleString(undefined, {
+          return new Date(row.created_at).toLocaleString(undefined, {
             timeZone: 'UTC',
           })
         },
@@ -66,37 +67,39 @@ export const BlogPostList = () => {
         colKey: 'link',
         title: translate('table.actions'),
         fixed: 'right',
-        width: 180,
+        align: 'center',
+        width: 120,
         cell: ({ row }) => {
           return (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                gap: '4px',
-              }}
-            >
-              <button
-                onClick={() => {
-                  show('blog_posts', row.id)
+            <div className='flex justify-center gap-4'>
+              <Modal
+                title={translate('buttons.edit')}
+                trigger={<Link theme='primary'>{translate('buttons.edit')}</Link>}
+                component={() => import('./save')}
+                componentProps={{ id: row.id }}
+              />
+              <Popconfirm
+                content='确认删除吗'
+                destroyOnClose
+                placement='top'
+                showArrow
+                theme='default'
+                onConfirm={() => {
+                  mutate({
+                    resource: 'article',
+                    id: row.id,
+                  })
                 }}
               >
-                {translate('buttons.show')}
-              </button>
-              <Modal
-                title='编辑'
-                trigger={<Button>{translate('common.search')}</Button>}
-                component={() => import('./edit')}
-                componentProps={{ id: row.id }}
-              ></Modal>
+                <Link theme='danger'>{translate('buttons.delete')}</Link>
+              </Popconfirm>
             </div>
           )
         },
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [translate]
   )
 
   return (
@@ -106,36 +109,31 @@ export const BlogPostList = () => {
       title={translate('blog_posts.fields.title')}
       tabs={[
         {
-          label: '全部',
+          label: translate('article.tab.all'),
           value: '0',
         },
         {
-          label: '已审核',
+          label: translate('article.tab.published'),
           value: '1',
         },
         {
-          label: '未审核',
+          label: translate('article.tab.unpublished'),
           value: '2',
         },
       ]}
-      headerRender={() => {
-        return (
-          <>
-            <Modal
-              title='创建'
-              trigger={<Button>创建</Button>}
-              component={() => import('./create')}
-            ></Modal>
-          </>
-        )
-      }}
+      headerRender={
+        <>
+          <Modal
+            title={translate('buttons.create')}
+            trigger={<Button>{translate('buttons.create')}</Button>}
+            component={() => import('./save')}
+          ></Modal>
+        </>
+      }
       filterRender={() => {
         return (
           <>
-            <FilterItem name={'test1'}>
-              <Input />
-            </FilterItem>
-            <FilterItem name={'test2'}>
+            <FilterItem name='keyword'>
               <Input />
             </FilterItem>
           </>
@@ -149,3 +147,5 @@ export const BlogPostList = () => {
     />
   )
 }
+
+export default List

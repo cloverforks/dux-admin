@@ -1,6 +1,6 @@
 import { appConfig } from '@duxweb/dux-refine'
-import admin from '../pages/admin'
+import Admin from '../pages/admin'
 
-const app: appConfig[] = [admin]
+const app: appConfig[] = [Admin]
 
 export default app

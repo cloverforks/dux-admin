@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import {
   ChartBar,
   ChartLine,
@@ -10,44 +11,45 @@ import {
   MediaText,
   List,
 } from '@duxweb/dux-refine'
+import { useTranslate } from '@refinedev/core'
 import { Card, Space } from 'tdesign-react/esm'
-
-import { useTranslate, useGetLocale, useResource } from '@refinedev/core'
+import { faker } from '@faker-js/faker'
 
 const Index = () => {
   const translate = useTranslate()
-  const locale = useGetLocale()
-
-  const { resources } = useResource()
-  console.log('resources', resources)
 
   const demoData = [100, 300, 200, 600, 200, 400, 800]
 
-  const avatarUrl = 'https://tdesign.gtimg.com/list-icon.png'
-  const listData = [
-    { id: 1, content: '列表内容列表内容列表内容' },
-    { id: 2, content: '列表内容列表内容列表内容' },
-    { id: 3, content: '列表内容列表内容列表内容' },
-    { id: 4, content: '列表内容列表内容列表内容' },
-    { id: 5, content: '列表内容列表内容列表内容' },
-    { id: 6, content: '列表内容列表内容列表内容' },
-    { id: 7, content: '列表内容列表内容列表内容' },
-    { id: 8, content: '列表内容列表内容列表内容' },
-  ]
+  const listData = useMemo(() => {
+    const listData = []
+    for (let id = 1; id <= 10; id++) {
+      const productName = faker.commerce.productName()
+      const listItem = {
+        id,
+        title: productName,
+        price: faker.commerce.price({
+          symbol: '$ ',
+        }),
+        desc: faker.commerce.department(),
+        image: faker.image.url(),
+      }
+      listData.push(listItem)
+    }
+    return listData
+  }, [])
 
   return (
     <Main>
       <MainHeader></MainHeader>
       <div className='grid mb-4 gap-4 lg:grid-cols-2 xl:grid-cols-4'>
         <div>
-          <StatsChart name={translate('system.SourceRate')} data={'1,000'}>
+          <StatsChart name={translate('dashboard.fields.sourceRate')} data={'1,000'}>
             <div className='h-46.5 w-full'>
               <ChartRing
                 data={[
                   { value: 1048, name: 'Search Engine' },
                   { value: 735, name: 'Direct' },
                   { value: 580, name: 'Email' },
-                  { value: 484, name: 'Union Ads' },
                 ]}
                 single
               />
@@ -55,14 +57,13 @@ const Index = () => {
           </StatsChart>
         </div>
         <div>
-          <StatsChart name='商品数量' data={'1,000'}>
+          <StatsChart name={translate('dashboard.fields.mallRate')} data={'1,000'}>
             <div className='h-46.5 w-full'>
               <ChartRing
                 data={[
-                  { value: 1048, name: 'Search Engine' },
-                  { value: 735, name: 'Direct' },
-                  { value: 580, name: 'Email' },
-                  { value: 484, name: 'Union Ads' },
+                  { value: 1048, name: 'Daily necessities' },
+                  { value: 735, name: 'Clothing' },
+                  { value: 580, name: 'Electron' },
                 ]}
               />
             </div>
@@ -70,7 +71,11 @@ const Index = () => {
         </div>
         <div className='grid gap-4 lg:col-span-2 lg:grid-cols-2'>
           <div>
-            <StatsCard name='销售额' icon='i-tabler:report-money' data={demoData}>
+            <StatsCard
+              name={translate('dashboard.fields.saleValue')}
+              icon='i-tabler:report-money'
+              data={demoData}
+            >
               <ChartBar
                 labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
                 data={[{ name: 'test', data: demoData }]}
@@ -79,7 +84,11 @@ const Index = () => {
             </StatsCard>
           </div>
           <div>
-            <StatsCard name='用户量' icon='i-tabler:users' data={demoData}>
+            <StatsCard
+              name={translate('dashboard.fields.userValue')}
+              icon='i-tabler:users'
+              data={demoData}
+            >
               <ChartArea
                 labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
                 data={[{ name: 'test', data: demoData }]}
@@ -88,7 +97,11 @@ const Index = () => {
             </StatsCard>
           </div>
           <div>
-            <StatsCard name='商品量' icon='i-tabler:basket ' data={demoData}>
+            <StatsCard
+              name={translate('dashboard.fields.mallValue')}
+              icon='i-tabler:basket '
+              data={demoData}
+            >
               <ChartLine
                 labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
                 data={[{ name: 'test', data: demoData }]}
@@ -97,7 +110,11 @@ const Index = () => {
             </StatsCard>
           </div>
           <div>
-            <StatsCard name='供货量' icon='i-tabler:box-seam ' data={demoData}>
+            <StatsCard
+              name={translate('dashboard.fields.supplyValue')}
+              icon='i-tabler:box-seam '
+              data={demoData}
+            >
               <ChartBar
                 labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
                 data={[{ name: 'test', data: demoData }]}
@@ -110,7 +127,7 @@ const Index = () => {
 
       <div className='grid mb-4 gap-4 md:grid-cols-2'>
         <div>
-          <Card bordered title='Overall User Acquisition'>
+          <Card bordered title={translate('dashboard.fields.userTrend')}>
             <div className='h-100 w-full'>
               <ChartBar
                 labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
@@ -124,7 +141,7 @@ const Index = () => {
           </Card>
         </div>
         <div>
-          <Card bordered title='Overall User Acquisition'>
+          <Card bordered title={translate('dashboard.fields.saleTrend')}>
             <div className='h-100 w-full'>
               <ChartBar
                 labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
@@ -141,73 +158,47 @@ const Index = () => {
 
       <div className='grid mb-4 gap-4 md:grid-cols-2 xl:grid-cols-4'>
         <div className='md:col-span-2'>
-          <Card bordered title='Top Revenue Generators'>
-            <List>
-              <List.Item append={'$ 400.00'}>
-                <MediaText>
-                  <MediaText.Image src='https://i.pravatar.cc/300' />
-                  <MediaText.Title>Here is the title</MediaText.Title>
-                  <MediaText.Desc>This is a text description</MediaText.Desc>
-                </MediaText>
-              </List.Item>
-              <List.Item append={'$ 400.00'}>
-                <MediaText>
-                  <MediaText.Image src='https://i.pravatar.cc/300' />
-                  <MediaText.Title>Here is the title</MediaText.Title>
-                  <MediaText.Desc>This is a text description</MediaText.Desc>
-                </MediaText>
-              </List.Item>
-              <List.Item append={'$ 400.00'}>
-                <MediaText>
-                  <MediaText.Image src='https://i.pravatar.cc/300' />
-                  <MediaText.Title>Here is the title</MediaText.Title>
-                  <MediaText.Desc>This is a text description</MediaText.Desc>
-                </MediaText>
-              </List.Item>
-              <List.Item append={'$ 400.00'}>
-                <MediaText>
-                  <MediaText.Image src='https://i.pravatar.cc/300' />
-                  <MediaText.Title>Here is the title</MediaText.Title>
-                  <MediaText.Desc>This is a text description</MediaText.Desc>
-                </MediaText>
-              </List.Item>
-              <List.Item append={'$ 400.00'}>
-                <MediaText>
-                  <MediaText.Image src='https://i.pravatar.cc/300' />
-                  <MediaText.Title>Here is the title</MediaText.Title>
-                  <MediaText.Desc>This is a text description</MediaText.Desc>
-                </MediaText>
-              </List.Item>
-            </List>
-          </Card>
-        </div>
-        <div>
-          <Card bordered title='Top Revenue Generators'>
+          <Card bordered title={translate('dashboard.fields.mallTotalRank')}>
             <List>
               {listData.map((item) => (
-                <List.Item
-                  key={item.id}
-                  append={
-                    <Space>
-                      <div className='font-bold'>$400.00</div>
-                      <div className='h-6 w-30'>
-                        <ChartArea
-                          labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
-                          data={[{ name: 'test', data: demoData }]}
-                          min
-                        />
-                      </div>
-                    </Space>
-                  }
-                >
-                  <div className='text-secondary'>列表内容的描述性文字</div>
+                <List.Item append={item.price} key={item.id}>
+                  <MediaText size='small'>
+                    <MediaText.Image src={item.image} />
+                    <MediaText.Title>{item.title}</MediaText.Title>
+                    <MediaText.Desc>{item.desc}</MediaText.Desc>
+                  </MediaText>
                 </List.Item>
               ))}
             </List>
           </Card>
         </div>
         <div>
-          <Card bordered title='Top Revenue Generators'>
+          <Card bordered title={translate('dashboard.fields.mallDayRank')}>
+            <List>
+              {listData.map((item) => (
+                <List.Item
+                  key={item.id}
+                  append={
+                    <Space>
+                      <div className='font-bold'>{item.price}</div>
+                      <div className='h-6 w-30'>
+                        <ChartArea
+                          labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
+                          data={[{ name: 'test', data: demoData }]}
+                          min
+                        />
+                      </div>
+                    </Space>
+                  }
+                >
+                  <div className='text-secondary'>{item.title}</div>
+                </List.Item>
+              ))}
+            </List>
+          </Card>
+        </div>
+        <div>
+          <Card bordered title={translate('dashboard.fields.mallMonthRank')}>
             <List>
               {listData.map((item) => (
                 <List.Item
@@ -225,7 +216,7 @@ const Index = () => {
                     </Space>
                   }
                 >
-                  <div className='text-secondary'>列表内容的描述性文字</div>
+                  <div className='text-secondary'>{item.title}</div>
                 </List.Item>
               ))}
             </List>

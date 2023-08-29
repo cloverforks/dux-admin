@@ -1,8 +1,8 @@
 import { Config } from '@duxweb/dux-refine'
 
 const config: Config = {
-  projectId: '75z1iv-x6xVpm-suPmVP',
-  apiUrl: 'http://0.0.0.0:3000',
+  projectId: '',
+  apiUrl: '/api',
   apiPath: {
     login: 'login',
     check: 'check',
